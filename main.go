@@ -14,6 +14,7 @@ import (
 )
 
 var router = gin.Default()
+var err error
 
 type User struct {
 	ID uint64       `json:"id"`
@@ -81,7 +82,6 @@ func CreateToken(userid uint64) (*TokenDetails, error) {
 	td.RefreshUuid = uuid.NewV4().String()
 
 	//1
-	var err error
 	//Creating Access Token
 	os.Setenv("ACCESS_SECRET", "jdnfksdmfksd") //this should be in an env file
 	atClaims := jwt.MapClaims{}
@@ -186,3 +186,5 @@ func main() {
 	router.POST("/todo", CreateTodo)
 	log.Fatal(router.Run(":8080"))
 }
+
+//https://learn.vonage.com/blog/2020/03/13/using-jwt-for-authentication-in-a-golang-application-dr/
